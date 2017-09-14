@@ -85,6 +85,8 @@ let rec subsets_with_size size lst =
 let graph f s = setify (map (fun x -> (x, f x)) s)
 let image f s = setify (map f s)
 
+let assoc_r dic s = assoc s dic
+
 let assoc_extend alist keys def_val =
   map (fun key -> (key, try List.assoc key alist with Not_found -> def_val)) keys
 
