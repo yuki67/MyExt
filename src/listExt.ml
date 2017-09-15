@@ -60,13 +60,7 @@ let rec anything_in_common lst1 lst2 =
   | [] -> false
   | x::xs -> mem x lst2 || anything_in_common xs lst2
 
-let rec subset lst1 lst2 =
-  match (setify lst1,setify lst2) with
-  | ([], _) -> true
-  | (_, []) -> false
-  | (h1::t1,h2::t2) ->
-      if h1 = h2 then subset t1 t2
-      else mem h1 t2 && subset t1 t2
+let rec subset lst1 lst2 = for_all (fun x -> mem x lst2) lst1
 
 let range n =
   assert (n >= 0);
