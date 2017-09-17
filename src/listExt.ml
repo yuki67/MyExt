@@ -6,6 +6,11 @@ let string_of_list string_of_element elems =
 let raw_string_of_list string_of_element elems =
   "[" ^ (String.concat "; " (List.map string_of_element elems)) ^ "]"
 
+let rec last = function
+  | [] -> failwith "ListExt.last"
+  | [x] -> x
+  | x::xs -> last xs
+
 (* lst1 - lst2 *)
 let diff lst1 lst2 = filter (fun e1 -> not (mem e1 lst2)) lst1
 let inter lst1 lst2 = filter (fun e1 -> mem e1 lst2) lst1
@@ -19,7 +24,7 @@ let set_add_ref lst elem =
 
 let setify lst = rev (fold_left set_add [] lst)
 
-let unions s = setify (fold_right (@) s [])
+let unions s = setify (fold_left (fun x y -> y @ x) [] s)
 
 let arg_min f lst =
   let rec minimize_rec lst (min, min_arg) =
@@ -36,6 +41,18 @@ let arg_max f lst = arg_min (fun x -> - f x) lst
 
 let union s1 s2 =
   setify (s1 @ s2)
+
+let union_map f lst = unions (map f lst)
+let concat_map f lst = flatten (map f lst)
+
+let adjacent_pairs f lst =
+  if lst = [] then []
+  else
+    let rec loop acc prev = function
+      | [] -> acc
+      | [x] -> (f prev x) :: acc
+      | x::xs -> loop ((f prev x)::acc) x xs in
+    rev (loop [] (hd lst) (tl lst))
 
 let rec all_pairs f lst1 lst2 =
   match lst1 with

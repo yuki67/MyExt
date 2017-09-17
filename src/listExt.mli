@@ -3,6 +3,7 @@ include module type of List
 val string_of_list : ('a -> string) -> 'a list -> string
 val raw_string_of_list : ('a -> string) -> 'a list -> string
 
+val last : 'a list -> 'a
 val diff : 'a list -> 'a list -> 'a list
 val inter : 'a list -> 'a list -> 'a list
 val set_add : 'a list -> 'a -> 'a list
@@ -19,7 +20,10 @@ val subsets_with_size : int -> 'a list -> 'a list list
 val arg_min : ('a -> int) -> 'a list -> 'a
 val arg_max : ('a -> int) -> 'a list -> 'a
 
+val union_map : ('a -> 'b list) -> 'a list -> 'b list
+val concat_map : ('a -> ' b list) -> 'a list -> 'b list
 val fold_left_ignore : ('a -> 'b -> bool) -> ('a -> 'b -> 'a) -> 'a -> 'b list -> 'a
+val adjacent_pairs : ('a -> 'a -> 'b) -> 'a list -> 'b list
 val all_pairs  : ('a -> 'b -> 'c) -> 'a list -> 'b list -> 'c list
 
 val graph : ('a -> 'b) -> 'a list -> ('a * 'b) list
