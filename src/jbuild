@@ -1,5 +1,4 @@
 (jbuild_version 1)
 
 (library
- ((name        MyExt)
-  (libraries   (camlimages))))
+ ((name        MyExt)))
