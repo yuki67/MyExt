@@ -6,10 +6,18 @@ let string_of_list string_of_element elems =
 let raw_string_of_list string_of_element elems =
   "[" ^ (String.concat "; " (List.map string_of_element elems)) ^ "]"
 
+let take lst n =
+  let rec loop acc n lst =
+    match lst, n with
+    | [], _
+    |  _, 0 -> rev acc
+    | x::xs, _ -> loop (x :: acc) (n - 1) xs in
+  loop [] n lst
+
 let rec last = function
   | [] -> failwith "ListExt.last"
   | [x] -> x
-  | x::xs -> last xs
+  | _::xs -> last xs
 
 (* lst1 - lst2 *)
 let diff lst1 lst2 = filter (fun e1 -> not (mem e1 lst2)) lst1
@@ -54,6 +62,15 @@ let adjacent_pairs f lst =
       | x::xs -> loop ((f prev x)::acc) x xs in
     rev (loop [] (hd lst) (tl lst))
 
+let loop_pairs f lst =
+  if lst = [] then []
+  else
+    let rec loop acc prev = function
+      | [] -> f prev (hd lst) :: acc
+      | [x] -> f prev x :: acc
+      | x::xs -> loop ((f prev x)::acc) x xs in
+    rev (loop [] (hd lst) (tl lst))
+
 let rec all_pairs f lst1 lst2 =
   match lst1 with
   | [] -> []
@@ -79,13 +96,28 @@ let rec anything_in_common lst1 lst2 =
 
 let rec subset lst1 lst2 = for_all (fun x -> mem x lst2) lst1
 
-let range n =
-  assert (n >= 0);
-  let rec range i acc =
-    if i = n then acc
-    else range (i + 1) (n - i - 1::acc)
-  in
-  range 0 []
+let rec range ?(start=0) ?(step=1) m =
+  if start >= m then []
+  else start :: range ~start:(start + step) ~step:(step) m
+
+let rec rangef ?(start=0.0) ?(step=1.0) m =
+  if start >= m then []
+  else start :: rangef ~start:(start +. step) ~step:(step) m
+
+let clones elem length =
+  let rec loop acc = function
+    | 0 -> acc
+    | x -> loop (elem::acc) (x - 1) in
+  loop [] length
+
+let rec linspace a b n =
+  let step = (b -. a) /. (float_of_int (n - 1)) in
+  let ans, now = Array.make n 0., ref a in
+  for i = 0 to (n - 1) do
+    ans.(i) <-  !now;
+    now := !now +. step
+  done;
+  Array.to_list ans
 
 let rec subsets_with_size size lst =
   if size = 0 then [[]] else
