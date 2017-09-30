@@ -16,7 +16,7 @@ let from_alist alist =
 let from_list_as_set lst = from_alist (map (fun x -> (x, ())) lst)
 
 let items tbl = setify (fold (fun x y a -> set_add a (x, y)) tbl [])
-let keys tbl = setify (fold (fun x y a -> set_add a x) tbl [])
-let vals tbl = setify (fold (fun x y a -> set_add a y) tbl [])
+let keys tbl = setify (fold (fun x _ a -> set_add a x) tbl [])
+let vals tbl = setify (fold (fun _ y a -> set_add a y) tbl [])
 
 let is_defined tbl x = try ignore (find tbl x); true with Not_found -> false

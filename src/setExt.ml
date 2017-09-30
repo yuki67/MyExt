@@ -1,7 +1,7 @@
 module Make (Ord: Set.OrderedType) =
 struct
   include Set.Make (Ord)
-  let arg_min f set = min_elt (map f set)
+  (* let arg_min f set = min_elt (Set. map f set) *)
   let anything_in_common s1 s2 = exists (fun elem -> mem elem s2) s1
   let rec all_pairs f s1 s2 =
     if is_empty s1 then []

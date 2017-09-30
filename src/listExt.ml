@@ -86,7 +86,7 @@ let rec product lst1 lst2 =
   | [] -> []
   | hd::tail ->  fold_left (fun a x -> (hd, x) :: a) (product tail lst2) lst2
 
-let rec fold_left_ignore cond f init lst =
+let fold_left_ignore cond f init lst =
   fold_left (fun acc s -> if cond acc s then acc else f acc s) init lst
 
 let rec anything_in_common lst1 lst2 =
@@ -94,7 +94,7 @@ let rec anything_in_common lst1 lst2 =
   | [] -> false
   | x::xs -> mem x lst2 || anything_in_common xs lst2
 
-let rec subset lst1 lst2 = for_all (fun x -> mem x lst2) lst1
+let subset lst1 lst2 = for_all (fun x -> mem x lst2) lst1
 
 let rec range ?(start=0) ?(step=1) m =
   if start >= m then []
@@ -110,7 +110,7 @@ let clones elem length =
     | x -> loop (elem::acc) (x - 1) in
   loop [] length
 
-let rec linspace a b n =
+let linspace a b n =
   let step = (b -. a) /. (float_of_int (n - 1)) in
   let ans, now = Array.make n 0., ref a in
   for i = 0 to (n - 1) do
