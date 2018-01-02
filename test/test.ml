@@ -4,6 +4,7 @@ let suite =
   "all" >:::
   [
     Float32.test;
+    Int32Ext.test;
   ]
 
 let _ =
