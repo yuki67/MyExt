@@ -1,4 +1,7 @@
 (jbuild_version 1)
 
 (library
- ((name        MyExt)))
+ ((name        MyExt)
+  (c_names     (float32))
+  (flags          (-ccopt -O2 -cclib -O2))
+  (ocamlopt_flags (-O2))))
